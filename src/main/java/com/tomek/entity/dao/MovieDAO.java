@@ -8,13 +8,45 @@ import org.hibernate.Transaction;
 
 public class MovieDAO {
     public Integer addMovie(Movie movie) {
+        Transaction tx = null;
+        Integer movieID = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            movieID = (Integer) session.save(movie);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+
+        return movieID;
+    }
+
+    public Movie getMovie(int id) {
+        Transaction tx = null;
+        Movie result = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            result = session.get(Movie.class, id);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public void removeMovie(Movie movie) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         Integer movieID = null;
 
         try {
             tx = session.beginTransaction();
-            movieID = (Integer) session.save(movie);
+            session.remove(movie);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
@@ -22,9 +54,7 @@ public class MovieDAO {
         } finally {
             session.close();
         }
-
-        return movieID;
     }
-
+// CRUD
 
 }
