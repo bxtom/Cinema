@@ -8,29 +8,15 @@ public class CinemaApp {
     public static void main(String[] args) {
         MovieDAO movieDAO = new MovieDAO();
 
-        Movie amadeusz = new Movie("Amadeusz", Date.valueOf("1984-09-06"), 160, "Milos Forman");
-        movieDAO.saveMovie(amadeusz);
+        movieDAO.saveMovie(new Movie("Amadeusz", Date.valueOf("1984-09-06"), 160, "Milos Forman"));
+        movieDAO.saveMovie(new Movie("Rambo: Pierwsza Krew", Date.valueOf("1982-10-22"), 93, "Ted Kotcheff"));
+        movieDAO.saveMovie(new Movie("Ukryty wymiar", Date.valueOf("1997-11-21"), 95, "Paul W.S. Anderson"));
 
-        Movie rambo = new Movie();
-        rambo.setTitle("Rambo: Pierwsza Krew");
-        rambo.setDuration(93);
-        rambo.setYear(Date.valueOf("1982-10-22"));
-        rambo.setDirector("Ted Kotcheff");
-        movieDAO.saveMovie(rambo);
-
-        Movie ukrytyWymiar = new Movie();
-        ukrytyWymiar.setTitle("Ukryty wymiar");
-        ukrytyWymiar.setDuration(95);
-        ukrytyWymiar.setYear(Date.valueOf("1997-11-21"));
-        ukrytyWymiar.setDirector("Paul W.S. Anderson");
-        movieDAO.saveMovie(ukrytyWymiar);
-
-        Movie firstMovie = movieDAO.getMovie(1);
-        System.out.println(firstMovie);
-        firstMovie.setTitle("Amadesz 2");
+        Movie firstMovie = movieDAO.getMovie(2);
+        firstMovie.setTitle("Rambo 2");
         movieDAO.updateMovie(firstMovie);
 
-        Movie secondMovie = movieDAO.getMovie(2);
+        Movie secondMovie = movieDAO.getMovie(3);
         movieDAO.removeMovie(secondMovie);
 
         HibernateUtil.getSessionFactory().close();
