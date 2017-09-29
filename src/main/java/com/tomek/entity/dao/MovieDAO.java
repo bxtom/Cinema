@@ -7,20 +7,19 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class MovieDAO {
-    public Integer addMovie(Movie movie) {
+    // CRUD
+
+    public void saveMovie(Movie movie) {
         Transaction tx = null;
-        Integer movieID = null;
 
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
-            movieID = (Integer) session.save(movie);
+            session.save(movie);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-
-        return movieID;
     }
 
     public Movie getMovie(int id) {
@@ -39,22 +38,29 @@ public class MovieDAO {
         return result;
     }
 
-    public void removeMovie(Movie movie) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public void updateMovie(Movie movie) {
         Transaction tx = null;
-        Integer movieID = null;
 
-        try {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.update(movie);
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void removeMovie(Movie movie) {
+        Transaction tx = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             tx = session.beginTransaction();
             session.remove(movie);
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
-        } finally {
-            session.close();
         }
     }
-// CRUD
-
 }

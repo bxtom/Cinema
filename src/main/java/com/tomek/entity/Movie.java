@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
+// POJO
 @Entity
 @Table(name = "movie")
 public class Movie {
@@ -26,6 +27,16 @@ public class Movie {
 
     @Column(name = "director")
     private String director;
+
+    public Movie() {
+    }
+
+    public Movie(String title, Date year, int duration, String director) {
+        this.title = title;
+        this.year = year;
+        this.duration = duration;
+        this.director = director;
+    }
 
     public int getMovie_id() {
         return movie_id;
