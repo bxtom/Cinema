@@ -1,12 +1,17 @@
 package com.tomek.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
 
 // POJO
 @Entity
@@ -27,6 +32,10 @@ public class Movie {
 
     @Column(name = "director")
     private String director;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movie_screening", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = { @JoinColumn(name = "screening_id") })
+    private List<Screening> screenings;
 
     public Movie() {
     }
@@ -76,6 +85,14 @@ public class Movie {
 
     public void setDirector(String director) {
         this.director = director;
+    }
+
+    public List<Screening> getScreenings() {
+        return screenings;
+    }
+
+    public void setScreenings(List<Screening> screenings) {
+        this.screenings = screenings;
     }
 
     @Override

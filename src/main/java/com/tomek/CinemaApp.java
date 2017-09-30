@@ -1,10 +1,16 @@
 package com.tomek;
 
 import com.tomek.entity.Movie;
+import com.tomek.entity.Screening;
 import com.tomek.entity.dao.MovieDAO;
-import java.sql.Date;
+import com.tomek.entity.dao.ScreeningDAO;
 
-public class CinemaApp {
+import javax.swing.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+public class CinemaApp extends JFrame {
     public static void main(String[] args) {
         MovieDAO movieDAO = new MovieDAO();
 
@@ -16,9 +22,29 @@ public class CinemaApp {
         firstMovie.setTitle("Rambo 2");
         movieDAO.updateMovie(firstMovie);
 
-        Movie secondMovie = movieDAO.getMovie(3);
-        movieDAO.removeMovie(secondMovie);
+        ScreeningDAO screeningDAO = new ScreeningDAO();
+        List<Screening> screenings = new ArrayList<Screening>();
 
-        HibernateUtil.getSessionFactory().close();
+        Screening screening1 = new Screening("2017-09-30 18:00:00");
+        screeningDAO.saveScreening(screening1);
+        screenings.add(screening1);
+
+        Screening screening2 = new Screening("2017-09-30 21:00:00");
+        screeningDAO.saveScreening(screening2);
+        screenings.add(screening2);
+
+        firstMovie.setScreenings(screenings);
+
+        movieDAO.updateMovie(firstMovie);
+
+        //HibernateUtil.getSessionFactory().close();
+
+
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                CinemaAppFrame frame = new CinemaAppFrame();
+            }
+        });
     }
 }

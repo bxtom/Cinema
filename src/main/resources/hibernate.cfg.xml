@@ -14,5 +14,6 @@
         <property name="format_sql">false</property>
 
         <mapping class="com.tomek.entity.Movie"/>
+        <mapping class="com.tomek.entity.Screening"/>
     </session-factory>
 </hibernate-configuration>
