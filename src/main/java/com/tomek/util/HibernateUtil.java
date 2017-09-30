@@ -1,4 +1,4 @@
-package com.tomek;
+package com.tomek.util;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

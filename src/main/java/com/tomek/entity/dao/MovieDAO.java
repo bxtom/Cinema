@@ -1,6 +1,6 @@
 package com.tomek.entity.dao;
 
-import com.tomek.HibernateUtil;
+import com.tomek.util.HibernateUtil;
 import com.tomek.entity.Movie;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
