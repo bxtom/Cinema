@@ -17,6 +17,16 @@ public class MoviePresenter {
         Movie movie = movieDAO.getMovie(movieID);
         movieDetails.setMovieTitle(movie.getTitle());
         movieDetails.setMovieDirector(movie.getDirector());
-        movieDetails.setMOvieDuration("" + movie.getDuration());
+        movieDetails.setMovieDuration("" + movie.getDuration());
+    }
+
+    public void showMovie(Movie movie) {
+        movieDetails.setMovieTitle(movie.getTitle());
+        movieDetails.setMovieDirector(movie.getDirector());
+        movieDetails.setMovieDuration("" + movie.getDuration());
+    }
+
+    public void addMovie() {
+
     }
 }

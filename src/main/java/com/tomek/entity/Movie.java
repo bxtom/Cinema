@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.Date;
 import java.util.List;
 
 // POJO
@@ -25,7 +24,7 @@ public class Movie {
     private String title;
 
     @Column(name = "year")
-    private Date year;
+    private int year;
 
     @Column(name = "duration")
     private int duration;
@@ -40,7 +39,7 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, Date year, int duration, String director) {
+    public Movie(String title, int year, int duration, String director) {
         this.title = title;
         this.year = year;
         this.duration = duration;
@@ -63,11 +62,11 @@ public class Movie {
         this.title = title;
     }
 
-    public Date getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -97,12 +96,6 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "Movie{" +
-                "movie_id=" + movie_id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", duration=" + duration +
-                ", director='" + director + '\'' +
-                '}';
+        return title;
     }
 }

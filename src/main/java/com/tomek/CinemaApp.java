@@ -5,16 +5,15 @@ import com.tomek.entity.dao.MovieDAO;
 import com.tomek.view.MainFrame;
 
 import javax.swing.*;
-import java.sql.Date;
 
 public class CinemaApp extends JFrame {
     public static void main(String[] args) {
         MovieDAO movieDAO = new MovieDAO();
 
-        movieDAO.saveMovie(new Movie("Amadeusz", Date.valueOf("1984-09-06"), 160, "Milos Forman"));
-//        movieDAO.saveMovie(new Movie("Rambo: Pierwsza Krew", Date.valueOf("1982-10-22"), 93, "Ted Kotcheff"));
-//        movieDAO.saveMovie(new Movie("Ukryty wymiar", Date.valueOf("1997-11-21"), 95, "Paul W.S. Anderson"));
-//
+        movieDAO.saveMovie(new Movie("Amadeusz", 1984, 160, "Milos Forman"));
+        movieDAO.saveMovie(new Movie("Rambo: Pierwsza Krew", 1982, 93, "Ted Kotcheff"));
+        movieDAO.saveMovie(new Movie("Ukryty wymiar", 1997, 95, "Paul W.S. Anderson"));
+
 //        Movie firstMovie = movieDAO.getMovie(2);
 //        firstMovie.setTitle("Rambo 2");
 //        movieDAO.updateMovie(firstMovie);
@@ -36,11 +35,8 @@ public class CinemaApp extends JFrame {
 
 
 
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                MainFrame frame = new MainFrame();
-            }
+        SwingUtilities.invokeLater(() -> {
+            MainFrame frame = new MainFrame();
         });
 
         //HibernateUtil.getSessionFactory().close();

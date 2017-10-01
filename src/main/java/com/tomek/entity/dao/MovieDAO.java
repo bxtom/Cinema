@@ -6,6 +6,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import java.util.List;
+
 public class MovieDAO {
     // CRUD
 
@@ -36,6 +38,22 @@ public class MovieDAO {
         }
 
         return result;
+    }
+
+    public List<Movie> getMovieList() {
+        Transaction tx = null;
+        List<Movie> movies = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            movies = session.createQuery("FROM Movie").list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+
+        return movies;
     }
 
     public void updateMovie(Movie movie) {

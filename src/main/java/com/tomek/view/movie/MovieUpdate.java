@@ -6,9 +6,10 @@ import com.tomek.util.PanelsManager;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
-import java.sql.Date;
 
-public class MovieAdd extends JPanel {
+public class MovieUpdate extends JPanel {
+    private Movie movie;
+
     private JLabel labTitle;
     private JLabel labDuration;
     private JLabel labDirector;
@@ -22,20 +23,22 @@ public class MovieAdd extends JPanel {
     private JButton btnSave;
     private JButton btnCancel;
 
-    public MovieAdd() {
+    MovieUpdate(Movie movie) {
         super();
 
+        this.movie = movie;
+
         labTitle = new JLabel("Title");
-        tfTitle = new JTextField();
+        tfTitle = new JTextField(movie.getTitle());
 
         labDuration = new JLabel("Duration");
-        tfDuration = new JTextField();
+        tfDuration = new JTextField(movie.getDuration());
 
         labDirector = new JLabel("Director");
-        tfDirector = new JTextField();
+        tfDirector = new JTextField(movie.getDirector());
 
         labYear = new JLabel("Year");
-        tfYear = new JTextField();
+        tfYear = new JTextField(movie.getYear());
 
         btnSave = new JButton("Save");
         btnCancel = new JButton("Cancel");
@@ -43,7 +46,7 @@ public class MovieAdd extends JPanel {
         initView();
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.tfTitle.setText(title);
     }
 
@@ -51,11 +54,11 @@ public class MovieAdd extends JPanel {
         return this.tfTitle.getText();
     }
 
-    public void setDuration(String duration) {
+    void setDuration(String duration) {
         this.tfDuration.setText(duration);
     }
 
-    public void setDirector(String director) {
+    void setDirector(String director) {
         this.tfDirector.setText(director);
     }
 
@@ -78,14 +81,13 @@ public class MovieAdd extends JPanel {
         add(btnCancel, "wrap");
 
         btnSave.addActionListener(e -> {
-            Movie movie = new Movie();
             movie.setTitle(tfTitle.getText());
             movie.setDuration(Integer.valueOf(tfDuration.getText()));
             movie.setYear(Integer.valueOf(tfYear.getText()));
             movie.setDirector(tfDirector.getText());
 
             MovieDAO dao = new MovieDAO();
-            dao.saveMovie(movie);
+            dao.updateMovie(movie);
 
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
             PanelsManager.changePanel(frame, new MovieList());
