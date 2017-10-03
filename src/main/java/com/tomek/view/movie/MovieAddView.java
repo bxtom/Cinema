@@ -2,68 +2,41 @@ package com.tomek.view.movie;
 
 import com.tomek.entity.Movie;
 import com.tomek.entity.dao.MovieDAO;
-import com.tomek.util.PanelsManager;
+import com.tomek.presenter.MoviePresenter;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
 public class MovieAddView extends JPanel {
-    private JLabel labTitle;
-    private JLabel labDuration;
-    private JLabel labDirector;
-    private JLabel labYear;
 
     private JTextField tfTitle;
     private JTextField tfDuration;
     private JTextField tfDirector;
     private JTextField tfYear;
 
-    private JButton btnSave;
-    private JButton btnCancel;
-
     public MovieAddView() {
-        super();
+        init();
+    }
 
-        labTitle = new JLabel("Title");
+    private void init() {
+        setLayout(new MigLayout("fillx"));
+
+
+        JLabel labTitle = new JLabel("Title");
         tfTitle = new JTextField();
 
-        labDuration = new JLabel("Duration");
+        JLabel labDuration = new JLabel("Duration");
         tfDuration = new JTextField();
 
-        labDirector = new JLabel("Director");
+        JLabel labDirector = new JLabel("Director");
         tfDirector = new JTextField();
 
-        labYear = new JLabel("Year");
+        JLabel labYear = new JLabel("Year");
         tfYear = new JTextField();
 
-        btnSave = new JButton("Save");
-        btnCancel = new JButton("Cancel");
+        JButton btnSave = new JButton("Save");
+        JButton btnCancel = new JButton("Cancel");
 
-        initView();
-    }
-
-    public void setTitle(String title) {
-        this.tfTitle.setText(title);
-    }
-
-    public String getTitle() {
-        return this.tfTitle.getText();
-    }
-
-    public void setDuration(String duration) {
-        this.tfDuration.setText(duration);
-    }
-
-    public void setDirector(String director) {
-        this.tfDirector.setText(director);
-    }
-
-    public void setYear(String year) {
-        this.tfYear.setText(year);
-    }
-
-    private void initView() {
-        setLayout(new MigLayout("fillx"));
 
         add(labTitle, "wrap");
         add(tfTitle, "wrap, growx");
@@ -91,12 +64,18 @@ public class MovieAddView extends JPanel {
             dao.saveMovie(movie);
 
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieListView());
+            //PanelsManager.changePanel(frame, new MovieListView());
+            MoviePresenter presenter = new MoviePresenter();
+            presenter.setFrame(frame);
+            presenter.showListOfMoviesView();
         });
 
         btnCancel.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieListView());
+            //PanelsManager.changePanel(frame, new MovieListView());
+            MoviePresenter presenter = new MoviePresenter();
+            presenter.setFrame(frame);
+            presenter.showListOfMoviesView();
         });
     }
 }

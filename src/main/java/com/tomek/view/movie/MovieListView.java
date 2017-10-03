@@ -2,7 +2,7 @@ package com.tomek.view.movie;
 
 import com.tomek.entity.Movie;
 import com.tomek.entity.dao.MovieDAO;
-import com.tomek.util.PanelsManager;
+import com.tomek.presenter.MoviePresenter;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -12,19 +12,9 @@ import java.util.List;
 public class MovieListView extends JPanel {
 
     private JList listMovies;
-    private JButton btnDetails;
-    private JButton btnAdd;
-    private JButton btnUpdate;
-    private JButton btnRemove;
 
     public MovieListView() {
-        super();
-        listMovies = new JList();
-        btnAdd = new JButton("Add");
-        btnUpdate = new JButton("Update");
-        btnDetails = new JButton("Details");
-        btnRemove = new JButton("Remove");
-        initView();
+        init();
     }
 
     public void setMoviesList(List<Movie> list) {
@@ -38,8 +28,14 @@ public class MovieListView extends JPanel {
         listMovies = new JList<>(listModel);
     }
 
-    private void initView() {
+    private void init() {
         setLayout(new MigLayout("nogrid"));
+
+        listMovies = new JList();
+        JButton btnAdd = new JButton("Add");
+        JButton btnUpdate = new JButton("Update");
+        JButton btnDetails = new JButton("Details");
+        JButton btnRemove = new JButton("Remove");
 
         MovieDAO movieDAO = new MovieDAO();
         List<Movie> list = movieDAO.getMovieList();
@@ -54,23 +50,31 @@ public class MovieListView extends JPanel {
         listMovies.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listMovies.setMinimumSize(new Dimension(400, 200));
 
+
+        add(listMovies, "wrap");
+        add(btnAdd, "split 3");
+        add(btnUpdate, "");
+        add(btnDetails, "");
+        add(btnRemove);
+
+
         btnAdd.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieAddView());
+
+            MoviePresenter presenter = new MoviePresenter();
+            presenter.setFrame(frame);
+            presenter.showMovieAddView();
         });
 
         btnDetails.addActionListener(e -> {
             if (!listMovies.isSelectionEmpty()) {
                 Movie movie = (Movie) listMovies.getSelectedValue();
 
-                MovieDetailsView details = new MovieDetailsView();
-                details.setLabTitle(movie.getTitle());
-                details.setLabDirector(movie.getDirector());
-                details.setLabDuration("" + movie.getDuration());
-                details.setLabYear("" + movie.getYear());
-
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                PanelsManager.changePanel(frame, details);
+
+                MoviePresenter presenter = new MoviePresenter();
+                presenter.setFrame(frame);
+                presenter.showMovieDetailsView(movie);
             }
         });
 
@@ -78,13 +82,11 @@ public class MovieListView extends JPanel {
             if (!listMovies.isSelectionEmpty()) {
                 Movie movie = (Movie) listMovies.getSelectedValue();
 
-                MovieUpdateView update = new MovieUpdateView(movie);
-                update.setTitle(movie.getTitle());
-                update.setDirector(movie.getDirector());
-                update.setDuration("" + movie.getDuration());
-
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                PanelsManager.changePanel(frame, update);
+
+                MoviePresenter presenter = new MoviePresenter();
+                presenter.setFrame(frame);
+                presenter.showMovieUpdateView(movie);
             }
         });
 
@@ -96,19 +98,16 @@ public class MovieListView extends JPanel {
                         "Warning", dialogButton);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     Movie movie = (Movie) listMovies.getSelectedValue();
-                    MovieDAO dao = new MovieDAO();
-                    dao.removeMovie(movie);
+
+                    MoviePresenter presenter = new MoviePresenter();
+                    presenter.removeMovie(movie);
 
                     JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                    PanelsManager.changePanel(frame, new MovieListView());
+
+                    presenter.setFrame(frame);
+                    presenter.showListOfMoviesView();
                 }
             }
         });
-
-        add(listMovies, "wrap");
-        add(btnAdd, "split 3");
-        add(btnUpdate, "");
-        add(btnDetails, "");
-        add(btnRemove);
     }
 }

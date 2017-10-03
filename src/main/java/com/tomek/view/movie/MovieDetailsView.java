@@ -1,57 +1,59 @@
 package com.tomek.view.movie;
 
-import com.tomek.entity.Movie;
-import com.tomek.util.PanelsManager;
+import com.tomek.presenter.MoviePresenter;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
 public class MovieDetailsView extends JPanel{
 
-    private JLabel labTitle;
-    private JLabel labDuration;
-    private JLabel labDirector;
-    private JLabel labYear;
+    private JLabel movieTitle;
+    private JLabel movieDuration;
+    private JLabel movieDirector;
+    private JLabel movieYear;
 
     public MovieDetailsView() {
         init();
     }
 
-    public void setLabTitle(String movieTitleText) {
-        labTitle.setText("Title: " + movieTitleText);
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle.setText("Title: " + movieTitle);
     }
 
-    public void setLabDuration(String duration) {
-        labDuration.setText("Duration: " + duration);
+    public void setMovieDuration(String movieDuration) {
+        this.movieDuration.setText("Duration: " + movieDuration);
     }
 
-    public void setLabDirector(String directorText) {
-        this.labDirector.setText("Director: " + directorText);
+    public void setMovieDirector(String movieDirector) {
+        this.movieDirector.setText("Director: " + movieDirector);
     }
 
-    public void setLabYear(String yearText) {
-        this.labYear.setText("Year: " + yearText);
+    public void setMovieYear(String movieYear) {
+        this.movieYear.setText("Year: " + movieYear);
     }
 
     private void init() {
         this.setLayout(new MigLayout());
 
-        labTitle = new JLabel();
-        labDuration = new JLabel();
-        labDirector = new JLabel();
-        labYear = new JLabel();
+        movieTitle = new JLabel();
+        movieDuration = new JLabel();
+        movieDirector = new JLabel();
+        movieYear = new JLabel();
 
-        add(labTitle, "wrap");
-        add(labDuration, "wrap");
-        add(labDirector, "wrap");
-        add(labYear, "wrap");
+        add(movieTitle, "wrap");
+        add(movieDuration, "wrap");
+        add(movieDirector, "wrap");
+        add(movieYear, "wrap");
 
         JButton btnBack = new JButton("Back");
         add(btnBack);
 
         btnBack.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieListView());
+
+            MoviePresenter presenter = new MoviePresenter();
+            presenter.setFrame(frame);
+            presenter.showListOfMoviesView();
         });
     }
 }

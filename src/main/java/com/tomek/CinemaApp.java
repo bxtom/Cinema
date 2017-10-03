@@ -16,7 +16,7 @@ public class CinemaApp extends JFrame {
 
 //        Movie firstMovie = movieDAO.getMovie(2);
 //        firstMovie.setTitle("Rambo 2");
-//        movieDAO.updateMovie(firstMovie);
+//        movieDAO.showMovieUpdateView(firstMovie);
 //
 //        ScreeningDAO screeningDAO = new ScreeningDAO();
 //        List<Screening> screenings = new ArrayList<Screening>();
@@ -31,7 +31,7 @@ public class CinemaApp extends JFrame {
 //
 //        firstMovie.setScreenings(screenings);
 //
-//        movieDAO.updateMovie(firstMovie);
+//        movieDAO.showMovieUpdateView(firstMovie);
 
 
         SwingUtilities.invokeLater(() -> {
