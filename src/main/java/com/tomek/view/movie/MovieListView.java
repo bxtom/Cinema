@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class MovieList extends JPanel {
+public class MovieListView extends JPanel {
 
     private JList listMovies;
     private JButton btnDetails;
@@ -17,7 +17,7 @@ public class MovieList extends JPanel {
     private JButton btnUpdate;
     private JButton btnRemove;
 
-    public MovieList() {
+    public MovieListView() {
         super();
         listMovies = new JList();
         btnAdd = new JButton("Add");
@@ -52,22 +52,22 @@ public class MovieList extends JPanel {
 
         listMovies = new JList<>(listModel);
         listMovies.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listMovies.setMinimumSize(new Dimension(400, 500));
+        listMovies.setMinimumSize(new Dimension(400, 200));
 
         btnAdd.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieAdd());
+            PanelsManager.changePanel(frame, new MovieAddView());
         });
 
         btnDetails.addActionListener(e -> {
             if (!listMovies.isSelectionEmpty()) {
                 Movie movie = (Movie) listMovies.getSelectedValue();
 
-                MovieDetails details = new MovieDetails();
-                details.setMovieTitle(movie.getTitle());
-                details.setMovieDirector(movie.getDirector());
-                details.setMovieDuration("" + movie.getDuration());
-                details.setMovieYear("" + movie.getYear());
+                MovieDetailsView details = new MovieDetailsView();
+                details.setLabTitle(movie.getTitle());
+                details.setLabDirector(movie.getDirector());
+                details.setLabDuration("" + movie.getDuration());
+                details.setLabYear("" + movie.getYear());
 
                 JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
                 PanelsManager.changePanel(frame, details);
@@ -78,7 +78,7 @@ public class MovieList extends JPanel {
             if (!listMovies.isSelectionEmpty()) {
                 Movie movie = (Movie) listMovies.getSelectedValue();
 
-                MovieUpdate update = new MovieUpdate(movie);
+                MovieUpdateView update = new MovieUpdateView(movie);
                 update.setTitle(movie.getTitle());
                 update.setDirector(movie.getDirector());
                 update.setDuration("" + movie.getDuration());
@@ -100,7 +100,7 @@ public class MovieList extends JPanel {
                     dao.removeMovie(movie);
 
                     JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                    PanelsManager.changePanel(frame, new MovieList());
+                    PanelsManager.changePanel(frame, new MovieListView());
                 }
             }
         });

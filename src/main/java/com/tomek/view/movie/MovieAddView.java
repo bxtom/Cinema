@@ -7,9 +7,7 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 
-public class MovieUpdate extends JPanel {
-    private Movie movie;
-
+public class MovieAddView extends JPanel {
     private JLabel labTitle;
     private JLabel labDuration;
     private JLabel labDirector;
@@ -23,22 +21,20 @@ public class MovieUpdate extends JPanel {
     private JButton btnSave;
     private JButton btnCancel;
 
-    MovieUpdate(Movie movie) {
+    public MovieAddView() {
         super();
 
-        this.movie = movie;
-
         labTitle = new JLabel("Title");
-        tfTitle = new JTextField(movie.getTitle());
+        tfTitle = new JTextField();
 
         labDuration = new JLabel("Duration");
-        tfDuration = new JTextField(movie.getDuration());
+        tfDuration = new JTextField();
 
         labDirector = new JLabel("Director");
-        tfDirector = new JTextField(movie.getDirector());
+        tfDirector = new JTextField();
 
         labYear = new JLabel("Year");
-        tfYear = new JTextField(movie.getYear());
+        tfYear = new JTextField();
 
         btnSave = new JButton("Save");
         btnCancel = new JButton("Cancel");
@@ -46,7 +42,7 @@ public class MovieUpdate extends JPanel {
         initView();
     }
 
-    void setTitle(String title) {
+    public void setTitle(String title) {
         this.tfTitle.setText(title);
     }
 
@@ -54,11 +50,11 @@ public class MovieUpdate extends JPanel {
         return this.tfTitle.getText();
     }
 
-    void setDuration(String duration) {
+    public void setDuration(String duration) {
         this.tfDuration.setText(duration);
     }
 
-    void setDirector(String director) {
+    public void setDirector(String director) {
         this.tfDirector.setText(director);
     }
 
@@ -71,31 +67,36 @@ public class MovieUpdate extends JPanel {
 
         add(labTitle, "wrap");
         add(tfTitle, "wrap, growx");
+
         add(labDuration, "wrap");
         add(tfDuration, "wrap, growx");
+
         add(labDirector, "wrap");
         add(tfDirector, "wrap, growx");
+
         add(labYear, "wrap");
         add(tfYear, "wrap, growx");
+
         add(btnSave, "split");
         add(btnCancel, "wrap");
 
         btnSave.addActionListener(e -> {
+            Movie movie = new Movie();
             movie.setTitle(tfTitle.getText());
             movie.setDuration(Integer.valueOf(tfDuration.getText()));
             movie.setYear(Integer.valueOf(tfYear.getText()));
             movie.setDirector(tfDirector.getText());
 
             MovieDAO dao = new MovieDAO();
-            dao.updateMovie(movie);
+            dao.saveMovie(movie);
 
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieList());
+            PanelsManager.changePanel(frame, new MovieListView());
         });
 
         btnCancel.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            PanelsManager.changePanel(frame, new MovieList());
+            PanelsManager.changePanel(frame, new MovieListView());
         });
     }
 }

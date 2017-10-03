@@ -34,7 +34,6 @@ public class CinemaApp extends JFrame {
 //        movieDAO.updateMovie(firstMovie);
 
 
-
         SwingUtilities.invokeLater(() -> {
             MainFrame frame = new MainFrame();
         });

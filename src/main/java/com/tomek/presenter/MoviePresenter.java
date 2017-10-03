@@ -1,29 +1,21 @@
 package com.tomek.presenter;
 
 import com.tomek.entity.Movie;
-import com.tomek.entity.dao.MovieDAO;
-import com.tomek.view.movie.MovieDetails;
+import com.tomek.view.movie.MovieDetailsView;
 
 public class MoviePresenter {
 
-    private MovieDAO movieDAO = new MovieDAO();
-    private MovieDetails movieDetails;
+    private MovieDetailsView movieDetailsView;
 
-    public MoviePresenter(MovieDetails movieDetails) {
-        this.movieDetails = movieDetails;
-    }
-
-    public void showMovie(Integer movieID) {
-        Movie movie = movieDAO.getMovie(movieID);
-        movieDetails.setMovieTitle(movie.getTitle());
-        movieDetails.setMovieDirector(movie.getDirector());
-        movieDetails.setMovieDuration("" + movie.getDuration());
+    public MoviePresenter(MovieDetailsView movieDetailsView) {
+        this.movieDetailsView = movieDetailsView;
     }
 
     public void showMovie(Movie movie) {
-        movieDetails.setMovieTitle(movie.getTitle());
-        movieDetails.setMovieDirector(movie.getDirector());
-        movieDetails.setMovieDuration("" + movie.getDuration());
+        MovieDetailsView details = new MovieDetailsView();
+        details.setLabTitle(movie.getTitle());
+        details.setLabDirector(movie.getDirector());
+        details.setLabDuration("" + movie.getDuration());
     }
 
     public void addMovie() {
