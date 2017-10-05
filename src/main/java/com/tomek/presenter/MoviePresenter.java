@@ -23,36 +23,37 @@ public class MoviePresenter {
     }
 
     public void showMovieDetailsView(Movie movie) {
-        MovieDetailsView view = new MovieDetailsView();
-
-        view.setMovieTitle(movie.getTitle());
-        view.setMovieDirector(movie.getDirector());
-        view.setMovieDuration(String.valueOf(movie.getDuration()));
-        view.setMovieYear(String.valueOf(movie.getYear()));
-
+        MovieDetailsView view = new MovieDetailsView(movie);
         changeView(frame, view);
     }
 
     public void showListOfMoviesView() {
         MovieListView view = new MovieListView();
-
         changeView(frame, view);
     }
 
     public void showMovieUpdateView(Movie movie) {
         MovieUpdateView view = new MovieUpdateView(movie);
-
         changeView(frame, view);
     }
 
     public void showMovieAddView() {
         MovieAddView view = new MovieAddView();
-
         changeView(frame, view);
     }
 
     public void removeMovie(Movie movie) {
         MovieDAO dao = new MovieDAO();
         dao.removeMovie(movie);
+    }
+
+    public void saveMovie(Movie movie) {
+        MovieDAO dao = new MovieDAO();
+        dao.saveMovie(movie);
+    }
+
+    public void updateMovie(Movie movie) {
+        MovieDAO dao = new MovieDAO();
+        dao.updateMovie(movie);
     }
 }

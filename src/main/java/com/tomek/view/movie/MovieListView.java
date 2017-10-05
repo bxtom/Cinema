@@ -17,8 +17,7 @@ public class MovieListView extends JPanel {
         init();
     }
 
-    public void setMoviesList(List<Movie> list) {
-
+    private void setMoviesList(List<Movie> list) {
         DefaultListModel<Movie> listModel = new DefaultListModel<>();
 
         for (Movie movie : list) {
@@ -38,15 +37,8 @@ public class MovieListView extends JPanel {
         JButton btnRemove = new JButton("Remove");
 
         MovieDAO movieDAO = new MovieDAO();
-        List<Movie> list = movieDAO.getMovieList();
+        setMoviesList(movieDAO.getMovieList());
 
-        DefaultListModel<Movie> listModel = new DefaultListModel<>();
-
-        for (Movie movie : list) {
-            listModel.addElement(movie);
-        }
-
-        listMovies = new JList<>(listModel);
         listMovies.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listMovies.setMinimumSize(new Dimension(400, 200));
 
@@ -56,7 +48,6 @@ public class MovieListView extends JPanel {
         add(btnUpdate, "");
         add(btnDetails, "");
         add(btnRemove);
-
 
         btnAdd.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);

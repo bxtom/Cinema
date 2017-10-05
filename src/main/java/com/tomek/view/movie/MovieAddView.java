@@ -1,7 +1,6 @@
 package com.tomek.view.movie;
 
 import com.tomek.entity.Movie;
-import com.tomek.entity.dao.MovieDAO;
 import com.tomek.presenter.MoviePresenter;
 import net.miginfocom.swing.MigLayout;
 
@@ -60,19 +59,17 @@ public class MovieAddView extends JPanel {
             movie.setYear(Integer.valueOf(tfYear.getText()));
             movie.setDirector(tfDirector.getText());
 
-            MovieDAO dao = new MovieDAO();
-            dao.saveMovie(movie);
-
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            //PanelsManager.changePanel(frame, new MovieListView());
+
             MoviePresenter presenter = new MoviePresenter();
             presenter.setFrame(frame);
+            presenter.saveMovie(movie);
             presenter.showListOfMoviesView();
         });
 
         btnCancel.addActionListener(e -> {
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            //PanelsManager.changePanel(frame, new MovieListView());
+
             MoviePresenter presenter = new MoviePresenter();
             presenter.setFrame(frame);
             presenter.showListOfMoviesView();

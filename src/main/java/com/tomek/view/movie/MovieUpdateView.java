@@ -1,7 +1,6 @@
 package com.tomek.view.movie;
 
 import com.tomek.entity.Movie;
-import com.tomek.entity.dao.MovieDAO;
 import com.tomek.presenter.MoviePresenter;
 import net.miginfocom.swing.MigLayout;
 
@@ -62,13 +61,11 @@ public class MovieUpdateView extends JPanel {
             movie.setDuration(Integer.valueOf(tfDuration.getText()));
             movie.setYear(Integer.valueOf(tfYear.getText()));
 
-            MovieDAO dao = new MovieDAO();
-            dao.updateMovie(movie);
-
             JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
 
             MoviePresenter presenter = new MoviePresenter();
             presenter.setFrame(frame);
+            presenter.updateMovie(movie);
             presenter.showListOfMoviesView();
         });
 
